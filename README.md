@@ -54,3 +54,8 @@ docker exec -ti $(docker ps -q -f  "ancestor=hashicorp/vault-enterprise" -f "sta
 docker logs $(docker ps -q -f  "ancestor=hashicorp/vault-enterprise" -f "status=running" --format "{{.Names}}"|head -n1)
 ```
 
+6. Stop the container and cleanup the image
+```shell
+docker rm --force $(docker ps -q -f  "ancestor=hashicorp/vault-enterprise" -f "status=running" --format "{{.Names}}"|head -n1)
+```
+
