@@ -10,10 +10,13 @@ For exercise purposes, the following points apply:
 - the ROOT_TOKEN will be generated at image creation (a simple text converted via base64)
 - the Vault server will be started in DEV mode (initialised and unsealed)
 
+**Please note**: (Optional) Run all in one script ```create_and_run_container.sh```
 
 ## Prerequisites:
 * Install and configure [Docker](https://docker.com)
 * Minimal Vault exposure [Vault-Getting-started](https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-install?in=vault%2Fgetting-started)
+
+
 
 ## Steps for achieving the goal
 1. Using the official image from HashiCorp create the image and run a container
