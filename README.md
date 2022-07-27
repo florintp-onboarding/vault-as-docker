@@ -1,3 +1,5 @@
+[![license](http://img.shields.io/badge/license-apache_2.0-red.svg?style=flat)](https://github.com/florintp-onboarding/generate-root-tokens-using-unseal-keys/LICENSE)
+
 # Running Vault Enterprise as a Docker container
 
 ## Create a container from the latest hashicorp/vault-enterprise image
