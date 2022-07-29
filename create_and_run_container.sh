@@ -6,7 +6,7 @@
 export VAULT_ADDR=http://localhost:8200
 VAULT_LICENSE=$(cat ../vault_license.hlic)
 
-export $VAULT_TOKEN=$(echo "my_temporary_token" |base64 )
+export VAULT_TOKEN=$(echo "my_temporary_token" |base64 )
 echo $VAULT_TOKEN
 
 docker run \
