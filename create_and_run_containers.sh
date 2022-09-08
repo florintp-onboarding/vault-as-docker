@@ -9,7 +9,7 @@
 
 # The demo will be kept alive for a number of seconds as per variable TIMEDEMO
 # Default value for TIMEDEMO is 100 seconds. TIMEDEMO=100
-export TIMEDEMO=36000
+export TIMEDEMO=3600
 
 # DEBUG information is printed if there is a terminal and if the value is greater than ZERO.
 export DEBUG=0
