@@ -67,9 +67,13 @@ done
 # If no valid ports were provided, that a default 8200 is started.
 [ "X$containers" == "X" ] && create_container 8200 && export containers="vault-8200"
 
-echo "Sleeping $TIMEDEMO seconds"
-sleep $TIMEDEMO
-echo $containers
+if [ $? -eq 0 ] ; then
+  echo "Sleeping $TIMEDEMO seconds"
+  sleep $TIMEDEMO
+else
+  export containers=""
+fi
+
 for container in $(docker ps -q -a -f  "ancestor=hashicorp/vault-enterprise"  --format "{{.Names}}") ; do
    # If the container is in our list of started containers we will remove it otherwise it will print out the manual cleanup.
    if [ $(echo $containers|grep $container|wc -l) -ge 1 ]  ; then
