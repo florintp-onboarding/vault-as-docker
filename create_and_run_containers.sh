@@ -63,15 +63,17 @@ while [[ "$#" -gt 0 ]]; do
     esac
     shift
 done
+echo $containers
 
 # If no valid ports were provided, that a default 8200 is started.
 [ "X$containers" == "X" ] && create_container 8200 && export containers="vault-8200"
 
-if [ $? -eq 0 ] ; then
+
+if [ "X$containers" == "X" ] ; then
+  export containers=""
+else
   echo "Sleeping $TIMEDEMO seconds"
   sleep $TIMEDEMO
-else
-  export containers=""
 fi
 
 for container in $(docker ps -q -a -f  "ancestor=hashicorp/vault-enterprise"  --format "{{.Names}}") ; do
