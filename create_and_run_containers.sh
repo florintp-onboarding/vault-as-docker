@@ -1,6 +1,7 @@
 #!/bin/bash
 # Default port exposed from container is $VAULT_PORT or the ARGV
-# Syntax is: $0 <PORT_VAULT1> [<VAULT_PORT2>] [<VAULT_PORT2>] [<VAULT_PORTN>]
+# Syntax is:
+#           ./create_and_run_containers.sh <PORT_VAULT1> [<VAULT_PORT2>] [<VAULT_PORT2>] [<VAULT_PORTN>]
 # where VAULT_PORT[1-n] are in the format 8[0-9][0-9][0-9]
 
 
