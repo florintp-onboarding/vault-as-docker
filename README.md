@@ -65,7 +65,7 @@ docker rm --force $(docker ps -q -f  "ancestor=hashicorp/vault-enterprise" -f "s
 1. (Optional) Enable debug of script by updating the DEBUG variable with a numeric value greater than 0.
 By default is disabled - DEBUG=0.
 
-2. Configure the estimated time for test/work by included the number of seconds in the variable TIMEDEMO.
+2. Configure the estimated time for test/work by including the number of seconds in the variable TIMEDEMO.
 By default TIMEDEMO=3600.
 
 3. Execute the script create_and_run_containers.sh with syntax:
