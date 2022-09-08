@@ -1,11 +1,11 @@
 [![license](http://img.shields.io/badge/license-apache_2.0-red.svg?style=flat)](https://github.com/florintp-onboarding/vault-as-docker/blob/main/LICENSE)
 
-# Running Vault Enterprise as a Docker container
+# Running Vault Enterprise as a Docker container(s)
 
 ## Create a container from the latest hashicorp/vault-enterprise image
 The current repository is used for initial setup and configure of a Vault server running as container on a local Docker system.
 The Vault server image is created as per latest HashiCorp enterprise image available at ```hashicorp/vault-enterprise```.
-Priot to start and run the image, a valid Vault license is required. The login ROOT_TOKEN should be also initialized at image creation.
+Prior to start and run the image, a valid Vault license is required. The login ROOT_TOKEN should be also initialized at image creation.
 
 For exercise purposes, the following points apply:
 - license will be stored one directory up (```../vault_license.hlic```)
@@ -20,7 +20,7 @@ For exercise purposes, the following points apply:
 
 
 
-## Steps for achieving the goal
+## Steps for achieving the goal (one manual container)
 1. Using the official image from HashiCorp create the image and run a container
 
 ```shell
@@ -61,3 +61,18 @@ docker logs $(docker ps -q -f  "ancestor=hashicorp/vault-enterprise" -f "status=
 docker rm --force $(docker ps -q -f  "ancestor=hashicorp/vault-enterprise" -f "status=running" --format "{{.Names}}"|head -n1)
 ```
 
+## Steps for creating multiple docker containers running Vault
+1. (Optional) Enable debug of script by updating the DEBUG variable with a numeric value greater than 0.
+By default is disabled - DEBUG=0.
+
+2. Configure the estimated time for test/work by included the number of seconds in the variable TIMEDEMO.
+By default TIMEDEMO=3600.
+
+3. Execute the script create_and_run_containers.sh with syntax:
+create_and_run_container.sh [<vault_port1>] [<Vault_port2>] ....
+
+- Example 1:
+`./create_and_run_container.sh`
+
+- Example 2:
+`./create_and_run_container.sh 8200 8204`
