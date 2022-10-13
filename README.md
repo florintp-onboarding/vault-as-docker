@@ -75,4 +75,4 @@ create_and_run_container.sh [<vault_port1>] [<Vault_port2>] ....
 `./create_and_run_container.sh`
 
 - Example 2:
-`./create_and_run_container.sh 8200 8204`
+`./create_and_run_containers.sh 8200 8204`
