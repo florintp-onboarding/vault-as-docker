@@ -32,6 +32,7 @@ docker run \
         -e VAULT_LICENSE=$(echo $VAULT_LICENSE) \
         -p 8200:8200 \
         --name vault-1 \
+        --network vault-prometheus \
         --detach \
         hashicorp/vault-enterprise
 ```
@@ -71,8 +72,23 @@ By default TIMEDEMO=3600.
 3. Execute the script create_and_run_containers.sh with syntax:
 create_and_run_container.sh [<vault_port1>] [<Vault_port2>] ....
 
-- Example 1:
-`./create_and_run_container.sh`
+- Example 1 (create a default 8200 Vault container listening port with the default TIMEDEMO):
+`export VAULT_TAG='hashicorp/vault-enterprise:1.14.0-ent'
+bash create_and_run_container.sh`
 
-- Example 2:
-`./create_and_run_containers.sh 8200 8204`
+- Example 2 (create 2 containers listening on 8200 and 8204 with the default TIMEDEMO):
+`export VAULT_TAG='hashicorp/vault-enterprise:1.14.0-ent'
+bash create_and_run_containers.sh 8200 8204`
+
+- Example 3 (create 2 containers listening on 8200 and 8204 with the default TIMEDEMO=10 seconds):
+`export VAULT_TAG='hashicorp/vault-enterprise:1.14.0-ent'
+export TIMEDEMO=10
+bash create_and_run_containers.sh 8200 8204`
+
+- Example 4 (create 2 containers listening on 8200 and 8204 and leave them running):
+`export VAULT_TAG='hashicorp/vault-enterprise:1.14.0-ent'
+bash /create_and_run_containers.sh 8200 8204 -b`
+
+- Example 5 (create 2 containers listening on 8200 and 8204 with the default TIMEDEMO=10 seconds and REMOVE ALL containers):
+`export VAULT_TAG='hashicorp/vault-enterprise:1.14.0-ent'
+bash /create_and_run_containers.sh 8200 8204 -f`
