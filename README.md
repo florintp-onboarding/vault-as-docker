@@ -73,22 +73,33 @@ By default TIMEDEMO=3600.
 create_and_run_container.sh [<vault_port1>] [<Vault_port2>] ....
 
 - Example 1 (create a default 8200 Vault container listening port with the default TIMEDEMO):
-`export VAULT_TAG='hashicorp/vault-enterprise:1.14.0-ent'
-bash create_and_run_container.sh`
+````
+export VAULT_TAG='hashicorp/vault-enterprise:1.14.0-ent'
+bash create_and_run_container.sh
+````
 
 - Example 2 (create 2 containers listening on 8200 and 8204 with the default TIMEDEMO):
-`export VAULT_TAG='hashicorp/vault-enterprise:1.14.0-ent'
-bash create_and_run_containers.sh 8200 8204`
+````
+export VAULT_TAG='hashicorp/vault-enterprise:1.14.0-ent'
+bash create_and_run_containers.sh 8200 8204
+````
 
 - Example 3 (create 2 containers listening on 8200 and 8204 with the default TIMEDEMO=10 seconds):
-`export VAULT_TAG='hashicorp/vault-enterprise:1.14.0-ent'
+````
+export VAULT_TAG='hashicorp/vault-enterprise:1.14.0-ent'
 export TIMEDEMO=10
-bash create_and_run_containers.sh 8200 8204`
+bash create_and_run_containers.sh 8200 8204
+````
 
 - Example 4 (create 2 containers listening on 8200 and 8204 and leave them running):
-`export VAULT_TAG='hashicorp/vault-enterprise:1.14.0-ent'
-bash /create_and_run_containers.sh 8200 8204 -b`
+````
+export VAULT_TAG='hashicorp/vault-enterprise:1.14.0-ent'
+bash /create_and_run_containers.sh 8200 8204 -b
+````
 
 - Example 5 (create 2 containers listening on 8200 and 8204 with the default TIMEDEMO=10 seconds and REMOVE ALL containers):
-`export VAULT_TAG='hashicorp/vault-enterprise:1.14.0-ent'
-bash /create_and_run_containers.sh 8200 8204 -f`
+````
+export VAULT_TAG='hashicorp/vault-enterprise:1.14.0-ent'
+bash /create_and_run_containers.sh 8200 8204 -f
+````
+`
