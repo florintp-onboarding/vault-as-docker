@@ -8,7 +8,7 @@ The Vault server image is created as per latest HashiCorp enterprise image avail
 Prior to start and run the image, a valid Vault license is required. The login ROOT_TOKEN should be also initialized at image creation.
 
 For exercise purposes, the following points apply:
-- license will be stored one directory up (```../vault_license.hlic```)
+- license should be available and readable as (```../vault_license.hclic```)
 - the ROOT_TOKEN will be generated at image creation (a simple text converted via base64)
 - the Vault server will be started in DEV mode (initialised and unsealed)
 
@@ -97,9 +97,15 @@ export VAULT_TAG='hashicorp/vault-enterprise:1.14.0-ent'
 bash /create_and_run_containers.sh 8200 8204 -b
 ````
 
-- Example 5 (create 2 containers listening on 8200 and 8204 with the default TIMEDEMO=10 seconds and REMOVE ALL containers):
+- Example 5 (create 2 containers listening on 8200 and 8204 with the default TIMEDEMO=10 seconds and enable DEBUG):
 ````
 export VAULT_TAG='hashicorp/vault-enterprise:1.14.0-ent'
 bash /create_and_run_containers.sh 8200 8204 -f
 ````
-`
+
+- Example 5 (CLEANUP all containers)
+````
+export VAULT_TAG='hashicorp/vault-enterprise:1.14.0-ent'
+bash /create_and_run_containers.sh -c 
+````
+
