@@ -10,10 +10,12 @@
 # Default license is collected from the license file ./vault_license.hclic
 # The demo will be kept alive for a number of seconds as per variable TIMEDEMO
 # Default value for TIMEDEMO is 3600 seconds. TIMEDEMO=3600
-export TIMEDEMO=${TIMEDEMO:-36000}
+export TIMEDEMO=${TIMEDEMO:-3600}
 
 # DEBUG information is printed if there is a terminal and if the value is greater than ZERO.
 export DEBUG=${DEBUG:-0}
+
+export CLEANUP=0
 
 export VAULT_LICENSE=$(cat vault_license.hclic 2>/dev/null)
 if [ "Z$VAULT_LICENSE" == "Z" ] ; then
@@ -41,6 +43,23 @@ function container_present()
    done
    set +x
    return $found
+}
+
+function delete_container()
+{
+  [ $DEBUG -gt 0 ] && set -x
+  local c_container="$1"
+  [ -t ] && printf  "\n### Removing container %s" 
+  printf '%s' "$(docker rm "$c_container" --force)"
+  return $?
+}
+
+function delete_all_containers()
+{
+ for container in $(docker ps -a -f  "ancestor=$VAULT_TAG"  --format "{{.Names}}") ; do
+   delete_container "$container"
+ done
+ return 0
 }
 
 function create_container()
@@ -84,21 +103,28 @@ while [[ "$#" -gt 0 ]]; do
 	   ( create_container $1 )
 	   [ $? -eq 0 ] &&  containers="$containers vault-$1" || printf '\nFailed to create container: %s ' "vault-$1"
 	   ;;
+        '-c' )
+	   export CLEANUP=1
+           printf "\n#Performing CLEANUP."
+	   delete_all_containers
+	   exit
+	   ;;
         '-f' )
 	   export DEBUG=1
-           printf "\n#Increasing DEBUG level"
+           #printf "\n#Increasing DEBUG level"
 	   set -x
 	   ;;
         '-b' )
 	   export TIMEDEMO=0
-           printf '\n#Creating containers and leave them in background.'
+           #printf '\n#Creating containers and leave them in background.'
 	   ;;
         *) printf '\n#Invalid port for vault passed:%s\nSkipping this argument.' "$1"
 	   ;; 
     esac
     shift
 done
-printf '\n#Containers created: %s' "$containers"
+printf '\n#Containers present: %s' "$containers"
+
 
 # If no valid ports were provided, that a default 8200 is started.
 [ "X$containers" == "X" ] && [ $arguments -eq 0 ] && create_container 8200 && export containers="vault-8200"
@@ -107,7 +133,7 @@ printf '\n#Containers created: %s' "$containers"
 if [[ "X$containers" != "X" ]] && 
    [[ $TIMEDEMO -gt 0 ]] ; then
    {
-    printf '\n#Sleeping %s seconds (Add any char and enter to break)' "$TIMEDEMO" 
+    printf '\n#Sleeping %s second(s) (Add any char and enter to break\n)' "$TIMEDEMO" 
     for i in $(seq $TIMEDEMO) ; do
        printf '\r%s %s' '.' $(date '+%H:%M:%S')
        x1="" ; read -t1 x1 ; x1=${x1:-Z}
@@ -115,13 +141,12 @@ if [[ "X$containers" != "X" ]] &&
      done
      for container in $(docker ps -a -f  "ancestor=$VAULT_TAG"  --format "{{.Names}}") ; do
         # If the container is in our list of started containers we will remove it otherwise it will print out the manual cleanup.
-        if [ $(echo $containers|grep $container|wc -l) -ge 1 ]  ; then
-    	   [ -t ] && printf  "\n### Removing container %s" "$(docker rm $container --force)"
-        else
-	   # If we are running with DEBUG then we just forcible remove the containers
-	   # else if we are in a terminal we provide the removal commands.
-	   [ $DEBUG -gt 0 ] && printf '\n### Removing container %s' "$(docker rm $container --force)" || printf '\n### Execute a manual removal of container %s \ndocker rm %s --force' "$container" "$container" 
-        fi
+        if [ $(echo $containers|grep $container|wc -l) -ge 1 ] ||
+	   [ $CLEANUP -gt 0 ] ; then
+	    delete_container "$container"
+	 else
+	    printf '\n### Execute a manual removal of container %s \ndocker rm %s --force' "$container" "$container" 
+	fi
      done
 }
 else
