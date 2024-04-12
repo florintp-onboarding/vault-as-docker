@@ -7,7 +7,7 @@
 # [-f] - force stop and remove all the containers
 
 
-# Default license is collected from the license file ../vault_license.hclic
+# Default license is collected from the license file ./vault_license.hclic
 # The demo will be kept alive for a number of seconds as per variable TIMEDEMO
 # Default value for TIMEDEMO is 3600 seconds. TIMEDEMO=3600
 export TIMEDEMO=${TIMEDEMO:-36000}
